@@ -16,24 +16,37 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-#from core.views import home_view, about_view, contact_view, dashboard
-from django.conf import settings
-#from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+
 urlpatterns = [
+    # URL de l'admin de Django
     path('admin/', admin.site.urls),
-    path("auth/", include("accounts.urls")),
-   
-    # URLs pour les authentifications : connexion et déconnexion
-    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+
+    # Authentification : Connexion et Déconnexion
+    path('accounts/login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
 
-    # Inclure les URLs de chaque application
-    path('accounts/', include('accounts.urls')),  # Authentification
-    path('managers/', include('managers.urls')),  # Gestionnaires
-    path('customers/', include('customers.urls')),  # Clients
-    path('portfolios/', include('portfolios.urls')),  # Portefeuilles
-    path('investments/', include('investments.urls')),  # Investissements
-    path('companies/', include('companies.urls')),  # Entreprises
-    path('financialdocuments/', include('financialdocuments.urls')),  # Documents financiers
+    # Redirection après la connexion
+    path('accounts/redirect/', include('accounts.urls')),  # Inclut la redirection et d'autres vues de l'app accounts
+
+    # Inscription pour les clients
+    path('accounts/signup/', include('accounts.urls')),
+
+    # URLs spécifiques aux Managers
+    path('managers/', include('managers.urls')),  # Gestion des fonctionnalités de l'application managers
+
+    # URLs spécifiques aux Clients
+    path('customers/', include('customers.urls')),  # Gestion des fonctionnalités de l'application customers
+
+    # URLs pour les Portefeuilles
+    path('portfolios/', include('portfolios.urls')),  # Gestion des portefeuilles
+
+    # URLs pour les Investissements
+    path('investments/', include('investments.urls')),  # Gestion des investissements
+
+    # URLs pour les Entreprises
+    path('companies/', include('companies.urls')),  # Gestion des entreprises
+
+    # URLs pour les Documents Financiers
+    path('financialdocuments/', include('financialdocuments.urls')),  # Gestion des documents financiers
 ]
