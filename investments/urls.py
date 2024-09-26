@@ -1,11 +1,11 @@
 from django.urls import path
-from investments.views import index, show, create, update, delete
+from investments.views import investment_list,investment_create,investment_detail,investment_update,investment_delete
 
 
 urlpatterns = [
-    path("index/", index, name='i-list'),
-    path("show/<int:id>", show, name="i-show"),
-    path("create/", create, name='i-create'),
-    path("update/<int:id>", update, name='i-update'),
-    path("delete/<int:id>", delete, name='i-delete'),
+    path("index/<int:portfolio_id>/", investment_list, name='i-list'),  
+    path("show/<int:id>", investment_detail, name="i-show"),
+    path("create/", investment_create, name='i-create'),
+    path("update/<int:id>", investment_update, name='i-update'),
+    path("delete/<int:id>", investment_delete, name='i-delete'),
 ]

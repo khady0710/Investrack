@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Liste des Portefeuilles
+{% endblock title %}
+
+{% block content %}
+<div class="card-body">
+    {% if user.is_manager %}
+            <a href="{% url 'f-create' %}">
+                <button type="button" class="btn btn-primary btn-rounded btn-fw">Ajouter un document</button>
+            </a>
+    {% endif %}
+</div>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Documents</h4>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Entreprises</th>
+                        <th>Documents </th>
+                     
+                       
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for financialdocuments in financialdocuments %}
+                        <tr>
+                            <th>{{ financialdocuments.id }}</th>
+                            <td>{{ financialdocuments.company.name }}</td>
+                            <td>{{ financialdocuments.document }}</td>  
+                               
+                            
+                            <td>
+                                <a href="{% url 'f-show' financialdocuments.id %}" class="btn btn-sm btn-info"> show</a>
+                                {% if user.is_manager %}
+                                    <a href="{% url 'f-update' financialdocuments.id %}" class="btn btn-sm btn-warning"> edit</a>
+                                {% endif %}
+                                {% if user.is_manager %}
+                                    <a href="{% url 'f-delete' financialdocuments.id %}" class="btn btn-sm btn-danger"> delete</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

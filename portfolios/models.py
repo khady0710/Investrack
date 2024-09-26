@@ -1,13 +1,14 @@
+from django.contrib.auth.models import User 
+from django.conf import settings # Import du modèle User
 from django.db import models
-from customers.models import Customer
 
 class Portfolio(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} (Customer: {self.customer.user.username})"
+        return f"{self.name} )"
 
     def total_investments(self):
         # Import local pour éviter les importations circulaires
@@ -27,5 +28,5 @@ class Portfolio(models.Model):
 
     def invested_companies(self):
         from investments.models import Investment
-        investments = Investment.objects.filter(portfolio=self).values_list('company__name', flat=True).distinct()
+        investments = Investment.objects.filter(portfolio=self).values_list('company', flat=True).distinct()
         return list(investments)

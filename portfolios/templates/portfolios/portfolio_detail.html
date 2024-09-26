@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Liste des portefeuilles
+{% endblock title %}
+
+{% block content %}
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Détails du portefeuille</h4>
+
+          
+            <div class="form-group">
+                <label>Nom :</label>
+                <p>{{ portfolios.name }}</p>
+            </div>
+            <h4>Investissements</h4>
+{% if investments %}
+    <div class="investment-list">
+        {% for investments in investments %}
+            <div class="investment-item">
+                <div class="form-group">
+                    <label>Quantité :</label>
+                    <p>{{ investments.quantity }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Type d'investissement :</label>
+                    <p>{{ investment.type }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Entreprise :</label>
+                    <p>{{ investment.company }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Prix d'achat :</label>
+                    <p>{{ investment.purchase_price }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Date d'achat :</label>
+                    <p>{{ investment.purchase_date }}</p>
+                </div>
+                <hr> 
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Aucun investissement trouvé pour ce portefeuille.</p>
+{% endif %}
+            <a href="{% url 'c-list' %}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

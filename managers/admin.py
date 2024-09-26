@@ -10,4 +10,4 @@ class ManagerAdmin(admin.ModelAdmin):
         obj.is_manager = True  # Assure que is_manager est toujours vrai pour les managers
         super().save_model(request, obj, form, change)
 
-admin.site.register(User, ManagerAdmin)
+

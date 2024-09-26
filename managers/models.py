@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Customer(models.Model):
+class Manager(models.Model):
 
     firstname = models.CharField(max_length=30) # name VARCHAR(30) NOT NULL
     lastname = models.CharField(max_length=30) # name VARCHAR(30) NOT NULL

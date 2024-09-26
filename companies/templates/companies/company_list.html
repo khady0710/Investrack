@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Liste des entreprises
+{% endblock title %}
+
+{% block content %}
+<div class="card-body">
+    <div class="template-demo">
+        {% if user.is_manager %}
+            <a href="{% url 'c-create' %}">
+                <button type="button" class="btn btn-primary btn-rounded btn-fw">Ajouter une entreprise</button>
+            </a>
+        {% endif %}
+    </div>
+</div>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Entreprises</h4>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Secteur</th>
+                        <th>Description</th>
+                        <th>Nombre d'actions</th>
+                        <th>Nombre d'obligations</th>
+                       
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for companies in companies %}
+                        <tr>
+                            <th>{{ companies.id}}</th>
+                            <td>{{ companies.name }}</td>
+                            <td>{{ companies.sector }}</td>
+                            <td>{{ companies.description }}</td>
+                            <td>{{ companies.total_shares }}</td>
+                            <td>{{ companies.total_bonds}}</td>
+                            
+                            <td>
+                                <a href="{% url 'c-show' companies.id %}" class="btn btn-sm btn-info"> show</a>
+                                <a href="{% url 'c-update' companies.id %}" class="btn btn-sm btn-warning"> edit</a>
+                                <a href="{% url 'c-delete' companies.id %}" class="btn btn-sm btn-danger"> delete</a>
+                            </td>
+                        </tr>
+                    
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

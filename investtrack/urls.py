@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from portfolios.views import portfolio_list
 
 urlpatterns = [
+    path('', portfolio_list, name="customer_dashboard"),
+
     # URL de l'admin de Django
     path('admin/', admin.site.urls),
 
@@ -30,7 +33,7 @@ urlpatterns = [
     path('accounts/redirect/', include('accounts.urls')),  # Inclut la redirection et d'autres vues de l'app accounts
 
     # Inscription pour les clients
-    path('accounts/signup/', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
 
     # URLs spécifiques aux Managers
     path('managers/', include('managers.urls')),  # Gestion des fonctionnalités de l'application managers

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Liste des Portefeuilles
+{% endblock title %}
+
+{% block content %}
+<div class="card-body">
+    <div class="template-demo">
+        <a href="{% url 'p-create' %}">
+            <button type="button" class="btn btn-primary btn-rounded btn-fw">Ajouter un portefeuille</button>
+        </a>
+    </div>
+</div>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Portefeuilles</h4>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Investissements total</th>
+                        <th>Montant total des investissements</th>
+                        <th>Types d'investissements</th>
+                        <th>Entreprises</th>
+                        <th>Actions</th> <!-- Nouvelle colonne pour les actions -->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for portfolio in portfolios %}
+                        <tr>
+                            <th>{{ portfolio.id }}</th>
+                            <td>{{ portfolio.name }}</td>
+                            <td>{{ portfolio.total_investments }}</td>  <!-- Méthode sans parenthèses -->
+                            <td>{{ portfolio.total_investment_amount }}</td>  <!-- Méthode sans parenthèses -->
+                            <td>
+                                {% for investment_type in portfolio.investment_types %}
+                                    {{ investment_type }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for invested_company in portfolio.invested_companies %}
+                                    {{ invested_company }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="{% url 'p-show' portfolio.id %}" class="btn btn-sm btn-info"> show</a>
+                                <a href="{% url 'p-update' portfolio.id %}" class="btn btn-sm btn-warning"> edit</a>
+                                <a href="{% url 'p-delete' portfolio.id %}" class="btn btn-sm btn-danger"> delete</a>
+                                <!-- Lien vers les investissements -->
+                                <a href="{% url 'i-list' portfolio.id %}" class="btn btn-sm btn-primary"> Voir investissements</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

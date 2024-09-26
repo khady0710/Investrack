@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Liste des investissements
+{% endblock title %}
+
+{% block content %}
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Détails de l'investissement</h4>
+
+          
+            <div class="form-group">
+                <label>Portefeuille :</label>
+                <p>{{ investments.portfolio.name }}</p>
+            </div>
+            <div class="form-group">
+                <label>Entreprise :</label>
+                <p>{{ investments.company.name }}</p>
+            </div>
+            <div class="form-group">
+                <label>Type :</label>
+                <p>{{ investments.type }}</p>
+            </div>
+            <div class="form-group">
+                <label> Quantité :</label>
+                <p>{{ investments.quantity }}</p>
+            </div>
+            <div class="form-group">
+                <label>Prix d'achat :</label>
+                <p>{{ investments.purchase_price}}</p>
+            </div>
+            <div class="form-group">
+                <label>Date d'achat :</label>
+                <p>{{ investments.purchase_date }}</p>
+            </div>
+            
+            <a href="{% url 'i-list' %}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

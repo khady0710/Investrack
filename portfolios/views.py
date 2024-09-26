@@ -2,18 +2,29 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Portfolio
 from .forms import PortfolioForm
 from django.contrib.auth.decorators import login_required
+from investments.models import Investment
 
 # Liste des portefeuilles (Read)
 @login_required
 def portfolio_list(request):
-    p_list = Portfolio.objects.filter(customer=request.user.customer)
+    p_list = Portfolio.objects.filter(user=request.user)
     return render(request, 'portfolios/portfolio_list.html', {'portfolios': p_list})
+
 
 # Détails d'un portefeuille (Read)
 @login_required
 def portfolio_detail(request, portfolio_id):
     p_show = get_object_or_404(Portfolio, id=portfolio_id)
-    return render(request, 'portfolios/portfolio_detail.html', {'portfolio': p_show})
+    investments = Investment.objects.filter(portfolio=p_show)
+
+    # Passer à la fois le portefeuille et les investissements au template
+    context = {
+        'portfolio': p_show,
+        'investments': investments,
+    }
+    
+    return render(request, 'portfolios/portfolio_detail.html', context)
+   
 
 # Création d'un portefeuille (Create)
 @login_required
@@ -22,7 +33,7 @@ def portfolio_create(request):
         form = PortfolioForm(request.POST)
         if form.is_valid():
             p_create = form.save(commit=False)
-            p_create.customer = request.user.customer
+            p_create.user = request.user
             p_create.save()
             return redirect('p-list')
     else:
